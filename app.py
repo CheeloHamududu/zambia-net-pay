@@ -17,3 +17,44 @@ def calculate_paye(taxable_income):
     else:
         tax = (800 * 0.25) + (2100 * 0.30) + (taxable_income - 6200) * 0.375
     return tax
+
+def main():
+    print("--- David's Net Pay Calculator (2017 Standards) ---")
+    
+    try:
+        gross_pay = float(input("Enter Monthly Gross Pay (ZMW): "))
+        retirement_rate = float(input("Enter Retirement Contribution % (e.g., 5 for 5%): "))
+        
+        # 1. Calculate Deductions
+        napsa = calculate_napsa(gross_pay)
+        
+        # Taxable income is usually Gross minus NAPSA (Zambian Tax Law)
+        taxable_income = gross_pay - napsa
+        paye = calculate_paye(taxable_income)
+        
+        # 2. Calculate Retirement Contribution (Private/Internal)
+        retirement_deduction = gross_pay * (retirement_rate / 100)
+        
+        # 3. Calculate Net Pay
+        total_deductions = napsa + paye + retirement_deduction
+        net_pay = gross_pay - total_deductions
+        
+        # Display Results
+        print("\n" + "="*40)
+        print(f"{'PAYSLIP SUMMARY':^40}")
+        print("="*40)
+        print(f"Gross Pay:                ZMW {gross_pay:,.2f}")
+        print(f"NAPSA Contribution:       ZMW {napsa:,.2f}")
+        print(f"PAYE (Tax):               ZMW {paye:,.2f}")
+        print(f"Retirement Savings:       ZMW {retirement_deduction:,.2f}")
+        print("-" * 40)
+        print(f"TOTAL DEDUCTIONS:         ZMW {total_deductions:,.2f}")
+        print(f"NET TAKE-HOME PAY:        ZMW {net_pay:,.2f}")
+        print("="*40)
+        print(f"Annual Retirement Projection: ZMW {retirement_deduction * 12:,.2f}")
+        
+    except ValueError:
+        print("Error: Please enter valid numerical values for pay and rates.")
+
+if __name__ == "__main__":
+    main()
