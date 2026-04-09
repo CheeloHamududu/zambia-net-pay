@@ -19,7 +19,7 @@ def calculate_paye(taxable_income):
     return tax
 
 def main():
-    print("--- David's Net Pay Calculator (2017 Standards) ---")
+    print("--- David's Net Pay Calculator (2026 Standards) ---")
     
     try:
         gross_pay = float(input("Enter Monthly Gross Pay (ZMW): "))
